@@ -1,0 +1,20 @@
+#bookFormDiv {
+    z-index: 2;
+    background: rgba(0, 0, 0, 0.85);
+    animation-name: appear;
+    animation-duration: 0.3s;
+}
+@keyframes appear {
+    from {
+        transform: scale(0.5);
+        z-index: 2;
+    }
+    to { transform: scale(1); }
+}
+#newBookForm {
+    max-width: 600px;
+}
+#pages:invalid {
+    box-shadow: 0 0 0 .2rem red;
+    border-color: red;
+}

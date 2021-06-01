@@ -1,47 +1,62 @@
-let myLibrary = [
+const myLibrary = [
     {
         title: 'The Hobbit',
         author: 'J.R.R. Tolkien',
         pages: 295,
         finished: true,
+        id: uniqueId(),
     },
     {
         title: 'The Lord of the Rings, Return of the King',
         author: 'J.R.R. Tolkien',
         pages: 595,
         finished: false,
+        id: uniqueId(),
     },
     {
         title: 'The Lord of the Rings',
         author: 'J.R.R. Tolkien',
         pages: 595,
         finished: false,
+        id: uniqueId(),
     },
     {
         title: 'The Lord of the Rings',
         author: 'J.R.R. Tolkien',
         pages: 595,
         finished: false,
+        id: uniqueId(),
     },
     {
         title: 'The Lord of the Rings',
         author: 'J.R.R. Tolkien',
         pages: 595,
         finished: false,
+        id: uniqueId(),
     }
 ];
 
 // Render library books on page load
 renderBooks(myLibrary);
 
-// Toggle display of form adding new book
+// Toggle display of form for adding new book
 const buttonAdd = document.getElementById('add-book');
 const buttonCancel = document.getElementById('cancel-btn');
 const formDiv = document.getElementById('bookFormDiv');
 buttonAdd.addEventListener('click', () => formDiv.classList.remove('d-none'));
 buttonCancel.addEventListener('click', () => formDiv.classList.add('d-none'));
 
-// On form submit add new book to myLibrary and display it
+// Show custom error message if 'pages' input is invalid
+const pagesInput = document.getElementById('pages');
+pagesInput.addEventListener('input', () => {
+  pagesInput.setCustomValidity('');
+  pagesInput.checkValidity();
+});
+pagesInput.addEventListener('invalid', () => {
+    pagesInput.setCustomValidity('Please enter only digits!');
+});
+
+// On form submit add new book to myLibrary and DOM
 const form = document.getElementById('newBookForm');
 form.addEventListener('submit', addBookToLibrary);
 
@@ -57,34 +72,23 @@ function addBookToLibrary(event) {
     formDiv.classList.add('d-none');
 }
 
-// Show custom error message if 'pages' input is invalid
-const pagesInput = document.getElementById('pages');
-pagesInput.addEventListener('input', () => {
-  pagesInput.setCustomValidity('');
-  pagesInput.checkValidity();
-});
-pagesInput.addEventListener('invalid', () => {
-    pagesInput.setCustomValidity('Please enter only digits!');
-});
-
 // Book constructor function
 function Book(title, author, pages, finished) {
-    this.title = title,
-    this.author = author,
-    this.pages = pages,
-    this.finished = finished,
-    this.info = () => {
-      let status = this.finished ? 'finished' : 'not read yet';
-      return `${this.title} by ${this.author}, ${this.pages} pages, ${status}`;
-    }
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.finished = finished;
+    this.id = uniqueId();
 }
 
-// Render books from parameter array
+// Render books from library array
 function renderBooks(library) {
-    const cardsParent = document.getElementById('cards-parent');
+    let cardsParent = document.getElementById('cards-parent');
     const template = document.getElementById('card-template');
     library.forEach(book => {
         const card = template.content.cloneNode(true);
+        card.querySelector('.col').setAttribute('id', book.id);
+        card.querySelector('.btn-delete').dataset.id = book.id;
         card.querySelector('.card-header').textContent = book.title;
         card.querySelector('.card-title').textContent = book.author;
         card.querySelector('#pages').textContent = `Pages: ${book.pages}`;
@@ -93,4 +97,22 @@ function renderBooks(library) {
         }
         cardsParent.appendChild(card);
     });  
+}
+
+// Remove book from library and DOM
+const btnsDelete = document.querySelectorAll('.btn-delete');
+btnsDelete.forEach(button => button.addEventListener('click', removeBook));
+
+function removeBook() {
+    const id = this.dataset.id;
+    const index = myLibrary.findIndex(book => book.id === id);
+    myLibrary.splice(index, 1);
+    let cardsParent = document.getElementById('cards-parent');
+    cardsParent.removeChild(document.getElementById(id));
+}
+
+
+// Unique ID generator (based on https://gist.github.com/gordonbrander/2230317#file-id-js)
+function uniqueId() {
+    return Math.random().toString(36).substr(2, 9);
 }

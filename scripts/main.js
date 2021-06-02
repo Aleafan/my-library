@@ -5,6 +5,9 @@ const myLibrary = [
         pages: 295,
         finished: true,
         id: uniqueId(),
+        changeStatus() {
+            this.finished = !this.finished;
+        },
     },
     {
         title: 'The Lord of the Rings, Return of the King',
@@ -12,6 +15,9 @@ const myLibrary = [
         pages: 595,
         finished: false,
         id: uniqueId(),
+        changeStatus() {
+            this.finished = !this.finished;
+        },
     },
     {
         title: 'The Lord of the Rings',
@@ -19,6 +25,9 @@ const myLibrary = [
         pages: 595,
         finished: false,
         id: uniqueId(),
+        changeStatus() {
+            this.finished = !this.finished;
+        },
     },
     {
         title: 'The Lord of the Rings',
@@ -26,6 +35,9 @@ const myLibrary = [
         pages: 595,
         finished: false,
         id: uniqueId(),
+        changeStatus() {
+            this.finished = !this.finished;
+        },
     },
     {
         title: 'The Lord of the Rings',
@@ -33,6 +45,9 @@ const myLibrary = [
         pages: 595,
         finished: false,
         id: uniqueId(),
+        changeStatus() {
+            this.finished = !this.finished;
+        },
     }
 ];
 
@@ -66,6 +81,7 @@ function addBookToLibrary(event) {
     const author = form.querySelector('#author').value;
     const pages = form.querySelector('#pages').value;
     const finished = form.querySelector('#finished').checked;
+    form.reset();
     const newBook = new Book(title, author, pages, finished);
     myLibrary.push(newBook);
     renderBooks([newBook]);
@@ -80,6 +96,9 @@ function Book(title, author, pages, finished) {
     this.finished = finished;
     this.id = uniqueId();
 }
+Book.prototype.changeStatus = function() {
+    this.finished = !this.finished;
+}
 
 // Render books from library array
 function renderBooks(library) {
@@ -89,15 +108,19 @@ function renderBooks(library) {
         const card = template.content.cloneNode(true);
         card.querySelector('.col').setAttribute('id', book.id);
         card.querySelector('.btn-delete').dataset.id = book.id;
+        card.querySelector('.btn-status').dataset.id = book.id;
         card.querySelector('.card-header').textContent = book.title;
         card.querySelector('.card-title').textContent = book.author;
-        card.querySelector('#pages').textContent = `Pages: ${book.pages}`;
+        card.querySelector('.pages').textContent = `Pages: ${book.pages}`;
         if (!book.finished) {
-            card.querySelector('#finished').textContent = 'Not finished';
+            card.querySelector('.finished').textContent = 'Not finished';
         }
         // Add event listeners for card's remove button
         const btnDelete = card.querySelector('.btn-delete');
         btnDelete.addEventListener('click', askConfirmation);
+        // Add event listeners for change status button
+        const btnStatus = card.querySelector('.btn-status');
+        btnStatus.addEventListener('click', changeStatus);
         // Render card
         cardsParent.appendChild(card);
     });  
@@ -123,7 +146,17 @@ function removeBook() {
     deleteConfDiv.classList.add('d-none');
 }
 
+// Change book's read status
+function changeStatus() {
+    const idToChange = this.dataset.id;
+    const indexToChange = myLibrary.findIndex(book => book.id === idToChange);
+    const bookCard = document.querySelector(`#${idToChange}`);
+    const finished = bookCard.querySelector('.finished');
+    myLibrary[indexToChange].changeStatus();
+    finished.textContent = myLibrary[indexToChange].finished ?  'Finished' : 'Not finished';
+}
+
 // Unique ID generator (based on https://gist.github.com/gordonbrander/2230317#file-id-js)
 function uniqueId() {
-    return Math.random().toString(36).substr(2, 9);
+    return 'a' + Math.random().toString(36).substr(2, 9);
 }

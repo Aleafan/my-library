@@ -15,7 +15,7 @@
 		</header>
 		<main class='container-sm position-relative py-4'>
 
-			<div id='bookFormDiv' class='position-absolute top-0 start-0 w-100 h-100 d-none'>
+			<div id='bookFormDiv' class='position-fixed top-0 start-0 w-100 h-100 d-none'>
 				<form id='newBookForm' class='bg-info mx-auto mt-5 p-4'>
 					<h2 class='text-center mb-3'>Add new book</h2>
 					<div class="form-floating mb-3">
@@ -41,7 +41,7 @@
 				</form>
 			</div>
 
-			<div id='deleteConfDiv' class='position-absolute top-0 start-0 w-100 h-100 d-none'>
+			<div id='deleteConfDiv' class='position-fixed top-0 start-0 w-100 h-100 d-none'>
 				<div id='deleteConfirm' class='bg-info mx-auto mt-5 p-4'>
 					<p class='text-center fs-5'>Do you want to remove this book from your library?</p>
 					<div class='d-flex justify-content-around'>
@@ -59,20 +59,12 @@
 							</div>
 							<div class="card-body">
 								<h5 class="card-title text-decoration-underline"></h5>
-								<p id='pages' class="card-text"></p>
-								<p id='finished' class="card-text text-muted">Finished</p>
+								<p class="pages card-text"></p>
+								<p class="finished card-text text-muted">Finished</p>
 							</div>
 							<div class="card-footer">
-								<button type='button' class="btn btn-danger btn-delete">Remove book</button>
-								<!-- <div class="dropdown">
-									<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-									  Change status
-									</button>
-									<ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-									  <li><button class="dropdown-item active" type="button">Finished</button></li>
-									  <li><button class="dropdown-item" type="button">Not finished</button></li>
-									</ul>
-								</div> -->
+								<button type='button' class="btn btn-secondary text-white w-100 mb-1 btn-status">Change status</button>
+								<button type='button' class="btn btn-danger w-100 btn-delete">Remove book</button>
 							</div>
 						</div>
 					</div>

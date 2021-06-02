@@ -1,4 +1,4 @@
-#bookFormDiv {
+#bookFormDiv, #deleteConfDiv {
     z-index: 2;
     background: rgba(0, 0, 0, 0.85);
     animation-name: appear;
@@ -11,7 +11,7 @@
     }
     to { transform: scale(1); }
 }
-#newBookForm {
+#newBookForm, #deleteConfirm {
     max-width: 600px;
 }
 #pages:invalid {

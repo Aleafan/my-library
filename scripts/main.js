@@ -95,22 +95,33 @@ function renderBooks(library) {
         if (!book.finished) {
             card.querySelector('#finished').textContent = 'Not finished';
         }
+        // Add event listeners for card's remove button
+        const btnDelete = card.querySelector('.btn-delete');
+        btnDelete.addEventListener('click', askConfirmation);
+        // Render card
         cardsParent.appendChild(card);
     });  
 }
 
-// Remove book from library and DOM
-const btnsDelete = document.querySelectorAll('.btn-delete');
-btnsDelete.forEach(button => button.addEventListener('click', removeBook));
+// Remove book from library and DOM after confirmation
+const deleteConfDiv = document.querySelector('#deleteConfDiv');
+let idToDelete = null;
+const btnsConfirm = document.querySelectorAll('.btn-confirm');
+btnsConfirm.forEach(button => button.addEventListener('click', removeBook));
 
-function removeBook() {
-    const id = this.dataset.id;
-    const index = myLibrary.findIndex(book => book.id === id);
-    myLibrary.splice(index, 1);
-    let cardsParent = document.getElementById('cards-parent');
-    cardsParent.removeChild(document.getElementById(id));
+function askConfirmation() {
+    idToDelete = this.dataset.id;
+    deleteConfDiv.classList.remove('d-none');
 }
-
+function removeBook() {
+    if (this.id === 'yes') {
+        const index = myLibrary.findIndex(book => book.id === idToDelete);
+        myLibrary.splice(index, 1);
+        let cardsParent = document.getElementById('cards-parent');
+        cardsParent.removeChild(document.getElementById(idToDelete));
+    }
+    deleteConfDiv.classList.add('d-none');
+}
 
 // Unique ID generator (based on https://gist.github.com/gordonbrander/2230317#file-id-js)
 function uniqueId() {

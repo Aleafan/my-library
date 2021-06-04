@@ -1,57 +1,10 @@
-const myLibrary = [
-    {
-        title: 'The Hobbit',
-        author: 'J.R.R. Tolkien',
-        pages: 295,
-        finished: true,
-        id: uniqueId(),
-        changeStatus() {
-            this.finished = !this.finished;
-        },
-    },
-    {
-        title: 'The Lord of the Rings, Return of the King',
-        author: 'J.R.R. Tolkien',
-        pages: 595,
-        finished: false,
-        id: uniqueId(),
-        changeStatus() {
-            this.finished = !this.finished;
-        },
-    },
-    {
-        title: 'The Lord of the Rings',
-        author: 'J.R.R. Tolkien',
-        pages: 595,
-        finished: false,
-        id: uniqueId(),
-        changeStatus() {
-            this.finished = !this.finished;
-        },
-    },
-    {
-        title: 'The Lord of the Rings',
-        author: 'J.R.R. Tolkien',
-        pages: 595,
-        finished: false,
-        id: uniqueId(),
-        changeStatus() {
-            this.finished = !this.finished;
-        },
-    },
-    {
-        title: 'The Lord of the Rings',
-        author: 'J.R.R. Tolkien',
-        pages: 595,
-        finished: false,
-        id: uniqueId(),
-        changeStatus() {
-            this.finished = !this.finished;
-        },
-    }
-];
+let myLibrary = [];
 
-// Render library books on page load
+// Check local storage and render library books on page load
+const storedLibrary = JSON.parse(localStorage.getItem('myLibrary'));
+if (storedLibrary) {
+    myLibrary = storedLibrary;
+}
 renderBooks(myLibrary);
 
 // Toggle display of form for adding new book
@@ -84,6 +37,7 @@ function addBookToLibrary(event) {
     form.reset();
     const newBook = new Book(title, author, pages, finished);
     myLibrary.push(newBook);
+    localStorage.setItem('myLibrary', JSON.stringify(myLibrary));
     renderBooks([newBook]);
     formDiv.classList.add('d-none');
 }
@@ -95,9 +49,6 @@ function Book(title, author, pages, finished) {
     this.pages = pages;
     this.finished = finished;
     this.id = uniqueId();
-}
-Book.prototype.changeStatus = function() {
-    this.finished = !this.finished;
 }
 
 // Render books from library array
@@ -140,6 +91,7 @@ function removeBook() {
     if (this.id === 'yes') {
         const index = myLibrary.findIndex(book => book.id === idToDelete);
         myLibrary.splice(index, 1);
+        localStorage.setItem('myLibrary', JSON.stringify(myLibrary));
         let cardsParent = document.getElementById('cards-parent');
         cardsParent.removeChild(document.getElementById(idToDelete));
     }
@@ -152,7 +104,8 @@ function changeStatus() {
     const indexToChange = myLibrary.findIndex(book => book.id === idToChange);
     const bookCard = document.querySelector(`#${idToChange}`);
     const finished = bookCard.querySelector('.finished');
-    myLibrary[indexToChange].changeStatus();
+    myLibrary[indexToChange].finished = !myLibrary[indexToChange].finished;
+    localStorage.setItem('myLibrary', JSON.stringify(myLibrary));
     finished.textContent = myLibrary[indexToChange].finished ?  'Finished' : 'Not finished';
 }
 

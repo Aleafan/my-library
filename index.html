@@ -4,19 +4,19 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+		<script src="https://kit.fontawesome.com/3568576df5.js" crossorigin="anonymous"></script>
 		<link href="styles/style.css" rel="stylesheet">
 		<script src="scripts/main.js" defer></script>
 		<title>Library</title>
 	</head>
 
-	<body>
-		<header class='container-fluid text-center bg-info py-2'>
-			<h1 class="fw-bold mb-0">Library</h1>
+	<body class='d-flex flex-column'>
+		<header class='container-fluid text-white py-2'>
+			<h1 class="fw-bold text-center mb-0"><i class="fas fa-book me-2"></i>My Library</h1>
 		</header>
-		<main class='container-sm position-relative py-4'>
-
+		<main class='container-sm position-relative flex-grow-1 pt-4'>
 			<div id='bookFormDiv' class='position-fixed top-0 start-0 w-100 h-100 d-none'>
-				<form id='newBookForm' class='bg-info mx-auto mt-5 p-4'>
+				<form id='newBookForm' class='bg-light mx-auto mt-5 p-4'>
 					<h2 class='text-center mb-3'>Add new book</h2>
 					<div class="form-floating mb-3">
 						<input type="text" class="form-control" id="title" placeholder="Title" required>
@@ -35,14 +35,14 @@
 						<label class="form-check-label" for="finished">Finished</label>
 					</div>
 					<div class='d-flex mt-3'>
-						<button type="submit" class="btn btn-success w-25">Add book</button>
+						<button type="submit" id='submit-btn' class="btn btn-success w-25">Add book</button>
 						<button id='cancel-btn' type="button" class="btn btn-danger w-25 ms-auto">Cancel</button>
 					</div>
 				</form>
 			</div>
 
 			<div id='deleteConfDiv' class='position-fixed top-0 start-0 w-100 h-100 d-none'>
-				<div id='deleteConfirm' class='bg-info mx-auto mt-5 p-4'>
+				<div id='deleteConfirm' class='bg-light mx-auto mt-5 p-4'>
 					<p class='text-center fs-5'>Do you want to remove this book from your library?</p>
 					<div class='d-flex justify-content-around'>
 						<button id='yes' type='button' class="btn btn-danger w-25 btn-confirm">Yes</button>
@@ -51,27 +51,31 @@
 				</div>
 			</div>
 
-			<div id='cards-parent' class="row row-cols-4 g-3">
+			<div id='cards-parent' class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3">
 				<template id='card-template'>
 					<div class="col">
 						<div class="card text-center h-100">
-							<div class="card-header fs-5 fw-bold">
+							<div class="card-header text-white fw-bold px-1">
 							</div>
-							<div class="card-body">
-								<h5 class="card-title text-decoration-underline"></h5>
+							<div class="card-body px-1">
+								<h5 class="card-title fs-6 text-decoration-underline"></h5>
 								<p class="pages card-text"></p>
 								<p class="finished card-text text-muted">Finished</p>
 							</div>
-							<div class="card-footer">
-								<button type='button' class="btn btn-secondary text-white w-100 mb-1 btn-status">Change status</button>
-								<button type='button' class="btn btn-danger w-100 btn-delete">Remove book</button>
+							<div class="card-footer px-2">
+								<button type='button' class="btn btn-outline-dark w-100 mb-1 px-1 btn-status">Change status</button>
+								<button type='button' class="btn btn-outline-danger text-dark w-100 px-1 btn-delete">Remove book</button>
 							</div>
 						</div>
 					</div>
 				</template>
 			</div>
-			<button id='add-book' type="button" class="btn btn-info d-block w-100 mt-4 mx-auto">NEW BOOK</button>
+
+			<button id='add-book' type="button" class="btn d-block my-3 w-100 text-white fw-bold">ADD NEW BOOK</button>
 		</main>
+		<footer class='container-sm'>
+			<p class='mb-0'>&copy; 2021, Aleafan</p>
+		</footer>
 		
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 	</body>

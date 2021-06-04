@@ -1,8 +1,42 @@
+@font-face {
+    font-family: 'Roboto Slab';
+    src: url(/fonts/RobotoSlab_wght.ttf) format('truetype');
+}
+  @font-face {
+    font-family: 'Lobster';
+    src: url(/fonts/Lobster.ttf) format('truetype');
+}
+html, body {
+    height: 100%;
+}
+body {
+    font-family: 'Roboto Slab', serif;
+    background-color: #5cdb95;
+    background-image: url("../images/fabric-dark.png");
+}
+header {
+    font-family: 'Lobster', cursive;
+    background-color: #05386B;
+}
+.card {
+    border-color: #05386B;
+    box-shadow: 0 0 0 3px #05386B;
+}
+.card-header {
+    background-color: #05386B;
+}
+#add-book {
+    background-color: #E06628;
+}
+#add-book:hover {
+    background-color: #0a8310;
+}
 #bookFormDiv, #deleteConfDiv {
     z-index: 2;
     background: rgba(0, 0, 0, 0.85);
     animation-name: appear;
     animation-duration: 0.3s;
+    overflow-y: scroll;
 }
 @keyframes appear {
     from {
@@ -17,4 +51,10 @@
 #pages:invalid {
     box-shadow: 0 0 0 .2rem red;
     border-color: red;
+}
+#submit-btn, #cancel-btn {
+    min-width: 100px;
+}
+footer p {
+    box-shadow: 0 -2px black;
 }

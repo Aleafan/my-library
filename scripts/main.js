@@ -50,6 +50,9 @@ function Book(title, author, pages, finished) {
     this.finished = finished;
     this.id = uniqueId();
 }
+Book.prototype.toggleStatus = function() {
+    this.finished = !this.finished;
+}
 
 // Render books from library array
 function renderBooks(library) {
@@ -104,7 +107,7 @@ function changeStatus() {
     const indexToChange = myLibrary.findIndex(book => book.id === idToChange);
     const bookCard = document.querySelector(`#${idToChange}`);
     const finished = bookCard.querySelector('.finished');
-    myLibrary[indexToChange].finished = !myLibrary[indexToChange].finished;
+    myLibrary[indexToChange].toggleStatus();
     localStorage.setItem('myLibrary', JSON.stringify(myLibrary));
     finished.textContent = myLibrary[indexToChange].finished ?  'Finished' : 'Not finished';
 }
